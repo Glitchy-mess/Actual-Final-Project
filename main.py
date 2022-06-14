@@ -33,7 +33,7 @@ from gameLogic import gameLogic
 pygame.init()
 screenSize = (600,600)
 screen = pygame.display.set_mode(screenSize)
-LBInit = LB()
+"""LBInit = LB()"""
 tileSize = backgroundDraw(screenSize, screen)
 #generalBlockFunct = generalBlock.blockMethods(screen, 0)
 

@@ -22,8 +22,8 @@ def backgroundDraw(screenSize, screen):
     pygame.draw.rect(screen,GRAY, (xVal, 0, height, screenSize[1]))
     #draw the border
   
-    #ygame.draw.rect(screen, BORDERBLACK, (0, yVal, screenSize[0], 10), 1)
-    #pygame.draw.rect(screen,BORDERBLACK, (xVal, 0, 10, screenSize[1]), 1)
+    pygame.draw.rect(screen, BORDERBLACK, (0, yVal, screenSize[0], 10), 1)
+    pygame.draw.rect(screen,BORDERBLACK, (xVal, 0, 10, screenSize[1]), 1)
     
     yVal += yinterval
     xVal += xInterval
