@@ -25,6 +25,8 @@ screenSize = (600,600)
 pygame.init()
 screen = pygame.display.set_mode(screenSize)
 """
+
+#this sure is random
 import pygame
 from background import backgroundDraw
 from BlockHandling import lBlock as LB
