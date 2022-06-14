@@ -1,7 +1,8 @@
 #make the general block logic here
+import pygame
 from abc import ABC, abstractmethod
 class blockMethods(ABC):
-  
+  @abstractmethod
   def __init__(self,screen, image, imageRect):
     #initialize the spritesheet
     self.screen = screen

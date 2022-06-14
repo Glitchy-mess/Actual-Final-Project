@@ -16,7 +16,7 @@ class gameLogic():
     yPos += self.ySpeed
     bottomYPos = yPos + screenRect[3]
     
-    print(bottomYPos, yPos, screenWidth, self.ySpeed)
+    #print(bottomYPos, yPos, screenWidth, self.ySpeed)
     if bottomYPos >= screenWidth:
       yPos = screenWidth - screenRect[3]
     return yPos
@@ -42,6 +42,9 @@ class gameLogic():
       #find a way to get the lower bounds
     #also make a check to see if the player is holding down left or right, if so then don't drop the block yet
   def lineClear(self, screen):
+    pass
+
+  def settleCollision(self):
     pass
     """
     Try to make something like

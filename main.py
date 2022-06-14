@@ -33,7 +33,7 @@ from gameLogic import gameLogic
 pygame.init()
 screenSize = (600,600)
 screen = pygame.display.set_mode(screenSize)
-"""LBInit = LB()"""
+
 tileSize = backgroundDraw(screenSize, screen)
 #generalBlockFunct = generalBlock.blockMethods(screen, 0)
 
@@ -45,6 +45,9 @@ GL = gameLogic(tileSize)
 yVal = 0
 xVal = screenSize[0]/2
 #can't really turn this into a class because i have to do stuff every frame and handling it from main makes life v e r y easy
+"""
+Use a list to store the vals of all the blocks after they settle, and then draw them in and activate the collisions
+"""
 gameState = False
 newTile = True
 BLACK = (0,0,0)
@@ -53,6 +56,7 @@ BLACK = (0,0,0)
 file = randomizer(screen, tileSize)
 image = file[0]
 imageRect = image.get_rect()
+LBInit = LB.LBlock(screen, image, imageRect)
 frameRate = pygame.time.Clock()
 sideBoundSize = [tileSize[2], screenSize[1] - tileSize[2]]
 while not gameState:
