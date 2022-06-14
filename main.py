@@ -56,7 +56,7 @@ BLACK = (0,0,0)
 file = randomizer(screen, tileSize)
 image = file[0]
 imageRect = image.get_rect()
-LBInit = LB.LBlock(screen, image, imageRect)
+LBInit = LB.LBlock(screen, image, imageRect, tileSize[0])
 frameRate = pygame.time.Clock()
 sideBoundSize = [tileSize[2], screenSize[1] - tileSize[2]]
 while not gameState:
