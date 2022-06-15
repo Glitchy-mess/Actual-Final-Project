@@ -9,6 +9,8 @@ class blockMethods(ABC):
     #loads and stores the image as a variable
     self.image = image
     self.imageRect = imageRect
+    self.xTile = self.imageRect[2]/3
+    self.yTile = self.imageRect[3]/3
     #self.imageBound = pygame.get_rect(self.image)
         
     
