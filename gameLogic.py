@@ -61,11 +61,11 @@ class gameLogic():
 
   def settleCollision(self, screen, image, imageRect, tileSize, pos, blockType):
     if blockType == 1 or blockType == 2:
-      blockSettle = SB(screen, image, imageRect, tileSize)
+      blockSettle = SB(screen, image, imageRect, tileSize, blockType)
     elif blockType == 3:
       blockSettle = TB(screen, image, imageRect, tileSize)
     elif blockType == 4 or blockType == 5:
-      blockSettle = CB(screen, image, imageRect, tileSize)
+      blockSettle = CB(screen, image, imageRect, tileSize, blockType)
     elif blockType == 5:
       blockSettle = UB(screen, image, imageRect, tileSize)
     else:

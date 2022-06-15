@@ -3,7 +3,7 @@ import pygame
 from abc import ABC, abstractmethod
 class blockMethods(ABC):
   @abstractmethod
-  def __init__(self,screen, image, imageRect):
+  def __init__(self,screen, image, imageRect, tileSize):
     #initialize the spritesheet
     self.screen = screen
     #loads and stores the image as a variable
@@ -11,17 +11,26 @@ class blockMethods(ABC):
     self.imageRect = imageRect
     self.xTile = self.imageRect[2]/3
     self.yTile = self.imageRect[3]/3
+    self.tileSize = tileSize
     #self.imageBound = pygame.get_rect(self.image)
         
     
   @abstractmethod
   def collisionBounds(self):
-    #gonna be looking at 2-3 rectangles for the collision, they are going to be 10x10 pixels
     pass
+    #gonna be looking at 2-3 rectangles for the collision, they are going to be 10x10 pixels
+    """
+    What if i were to make 2-3 rectangles for collision and then input their height and width which then get combined to make the things 
+    rectangleParams1, rectangleParams2, rectangleParams3 = None)
+    nah it wont' work for generalizing everything
+    """
 
   @abstractmethod
   def settleLogic(self):
     pass
+    
+    
+  
 
 
   

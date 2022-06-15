@@ -62,7 +62,7 @@ while not gameState:
   if newTile == True:
     file = randomizer(screen, tileSize)
     image = file[0]
-    blockType = file[1] + 1
+    blockType = file[2] + 1
     imageRect = image.get_rect()
     sideBoundSize = [tileSize[2], screenSize[1] - tileSize[2]]
     LBInit = LB.LBlock(screen, image, imageRect, tileSize[0])
@@ -112,11 +112,10 @@ while not gameState:
   yMovement = GL.downMovement(yVal, sideBoundSize[1] ,imageRect)
   yVal = yMovement[0]
   yChange = yMovement[1]
-  print("xChange = ", str(xChange))
   if yChange == 0 and xChange == 0:
     counter += 1
     if counter != 10:
-      GL.settleCollision(screen, image, imageRect, tileSize[2], (xVal, yVal), blockType)
+      collisionBonds = GL.settleCollision(screen, image, imageRect, tileSize[2], (xVal, yVal), blockType)
     else:
       newTile = True
   pygame.display.flip()
