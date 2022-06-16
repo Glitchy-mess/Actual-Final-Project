@@ -29,7 +29,7 @@ screen = pygame.display.set_mode(screenSize)
 #this sure is random
 import pygame
 from background import backgroundDraw
-from BlockHandling import lBlock as LB
+
 from tileset import randomizer
 from gameLogic import gameLogic
 pygame.init()
@@ -44,8 +44,7 @@ pygame.display.flip()
 
 GL = gameLogic(tileSize)
 #yVal can't be resetted every frame as that would send the picture back to the top
-yVal = 0
-xVal = screenSize[0]/2
+
 #can't really turn this into a class because i have to do stuff every frame and handling it from main makes life v e r y easy
 """
 Use a list to store the vals of all the blocks after they settle, and then draw them in and activate the collisions
@@ -53,19 +52,33 @@ Use a list to store the vals of all the blocks after they settle, and then draw 
 gameState = False
 newTile = True
 BLACK = (0,0,0)
+#what if collision list actually held every single individual tile that has dropped so that i can actually impliment clearing lines?
+collisionList = []
 #pygame.Surface.blit(screen, file[0], (screenSize[0]/2,yVal))
 
-file = randomizer(screen, tileSize)
-image = file[0]
-imageRect = image.get_rect()
-LBInit = LB.LBlock(screen, image, imageRect)
+
+
 frameRate = pygame.time.Clock()
-sideBoundSize = [tileSize[2], screenSize[1] - tileSize[2]]
+
 while not gameState:
   screen.fill(BLACK)
   backgroundDraw(screenSize, screen)
-  frameRate.tick(15)
+  if newTile == True:
+    file = randomizer(screen, tileSize)
+    image = file[0]
+    blockType = file[2] + 1
+    imageRect = image.get_rect()
+    sideBoundSize = [tileSize[2], screenSize[1] - tileSize[2]]
+    print(len(collisionList))
 
+    yVal = 0
+    xVal = screenSize[0]/2
+    counter = 0
+  frameRate.tick(15)
+  xChange = 0
+  yChange = 0
+  newTile = False
+  
   pygame.Surface.blit(screen, image, (xVal,yVal))
   
   for event in pygame.event.get():
@@ -76,7 +89,11 @@ while not gameState:
      gameState = True
     elif event.type == pygame.KEYDOWN:
       
-      xVal = GL.generalMovement(xVal, event.key, sideBoundSize, imageRect)
+      xMovement = GL.generalMovement(xVal, event.key, sideBoundSize, imageRect)
+      xVal = xMovement[0]
+      xChange = xMovement[1]
+      counter = 0
+      
     
     #print("xVal = " + str(xVal))
   
@@ -97,8 +114,19 @@ while not gameState:
     
     #generalBlockFunct.collision(blockNumber)
   
-  yVal = GL.downMovement(yVal, sideBoundSize[1] ,imageRect)
+  yMovement = GL.downMovement(yVal, sideBoundSize[1] ,imageRect)
+  yVal = yMovement[0]
+  yChange = yMovement[1]
+  if yChange == 0 and xChange == 0:
+    counter += 1
+    if counter != 10:
+      collisionTile = (GL.settleCollision(screen, image, imageRect, tileSize[2], (xVal, yVal), blockType))
 
+      collisionList.append(collisionTile)
+      
+    else:
+      
+      newTile = True
   pygame.display.flip()
   
 pygame.quit()

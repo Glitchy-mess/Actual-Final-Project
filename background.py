@@ -10,8 +10,8 @@ def backgroundDraw(screenSize, screen):
   yVal = 0
   xVal = 0
   scale = 60
-  xTileSize = screenSize[0] / 28
-  yTileSize = screenSize[1] / 28
+  tileSize = screenSize[0]/28
+
   GRAY = [scale] * 3
   #screen.fill(GRAY)
   LGRAY = [scale+90] * 3
@@ -34,6 +34,7 @@ def backgroundDraw(screenSize, screen):
   pygame.draw.rect(screen, LGRAY, (edgeXVal[0], 0, edgeIntervalScale, screenSize[1]))
   pygame.draw.rect(screen, LGRAY, (edgeXVal[1], 0, edgeIntervalScale, screenSize[1]))
   pygame.draw.rect(screen, LGRAY, (0, screenSize[1] - edgeIntervalScale, screenSize[0], edgeIntervalScale))
-  return xTileSize, yTileSize, edgeIntervalScale
+  #fix this to only be two values
+  return tileSize, tileSize, edgeIntervalScale
     
   
