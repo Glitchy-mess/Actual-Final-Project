@@ -27,7 +27,7 @@ screen = pygame.display.set_mode(screenSize)
 """
 import pygame
 from background import backgroundDraw
-from BlockHandling import lBlock as LB
+
 from tileset import randomizer
 from gameLogic import gameLogic
 pygame.init()
@@ -67,7 +67,8 @@ while not gameState:
     blockType = file[2] + 1
     imageRect = image.get_rect()
     sideBoundSize = [tileSize[2], screenSize[1] - tileSize[2]]
-    LBInit = LB.LBlock(screen, image, imageRect, tileSize[0])
+    print(len(collisionList))
+
     yVal = 0
     xVal = screenSize[0]/2
     counter = 0
@@ -117,7 +118,10 @@ while not gameState:
   if yChange == 0 and xChange == 0:
     counter += 1
     if counter != 10:
-      collisionBonds = GL.settleCollision(screen, image, imageRect, tileSize[2], (xVal, yVal), blockType)
+      collisionTile = (GL.settleCollision(screen, image, imageRect, tileSize[2], (xVal, yVal), blockType))
+
+      collisionList.append(collisionTile)
+      
     else:
       
       newTile = True

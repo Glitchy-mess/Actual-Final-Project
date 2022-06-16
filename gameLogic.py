@@ -51,8 +51,6 @@ class gameLogic():
     return xPos, xChange
       #find a way to get the lower bounds
     #also make a check to see if the player is holding down left or right, if so then don't drop the block yet
-  def lineClear(self, screen):
-    pass
     """
     Try to make something like
     if there's a rectangle in the screen that stretches throughout the thing
@@ -73,6 +71,10 @@ class gameLogic():
       
     
     collisionList = blockSettle.collisionBounds(pos)
+    return collisionList
     
-    
-    
+  def lineClear(self, collisionList, screen):
+    GRAY = [189,189,189]
+    for tiles in collisionList:
+      for tileCoordinates in tiles:
+        pygame.draw.rect(screen, GRAY, (tileCoordinates[0], tileCoordinates[1], tileCoordinates[2],tileCoordinates[3]))

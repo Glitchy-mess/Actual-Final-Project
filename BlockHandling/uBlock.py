@@ -6,22 +6,31 @@ class UBlock(BM):
 
     super().__init__(screen,image, imageRect, tileSize)
 
-
+  def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
+    tileList = super().tileDraw(repetitions, pos, width, height, sideNumber, xTrans, yTrans)
+    return tileList
+    
   def collisionBounds(self, pos):
-    width = self.xTile *3 
-    height = self.yTile *3/2
+    width = self.xTile
+    height = self.yTile * 3/2
 
     #this block is :sparkles: special :sparkles: because it has that gap in the middle, so make two rectangles to account for that
     #rectangles respectively handle the 1st and 2nd rectangle in the top layer
-    topCollision1 = (pos[0], pos[1], self.xTile, height) 
-    topCollision2 = (pos[0] + (self.xTile*2), pos[1], self.xTile, height)
+    
     #forms a 3x1 rect
-    bottomCollision = (pos[0], pos[1] + height, width, height)
-    collisionList = (topCollision1, topCollision2, bottomCollision)
+   
+    
+
+    topCollisionList1 = self.tileDraw(1, pos, width, height, 1, 0,0)
+    topCollisionList2 = self.tileDraw(1,pos,width,height,1, width*2, 0)
+    bottomCollisionList = self.tileDraw(3, pos, width, height, 1, 0, height)
+    collisionList = (topCollisionList1, topCollisionList2, bottomCollisionList)
+    
     RED = [255, 0, 0]
 
     for rect in collisionList:
-      pygame.draw.rect(self.screen, RED, (rect[0], rect[1], rect[2], rect[3]))
+      for i in rect:
+        pygame.draw.rect(self.screen, RED, (i[0], i[1], i[2], i[3]), 1)
     return collisionList
 
   def settleLogic(self):

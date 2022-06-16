@@ -28,6 +28,22 @@ class blockMethods(ABC):
   @abstractmethod
   def settleLogic(self):
     pass
+
+  @abstractmethod
+  def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
+    tileList = []
+    incriment = lambda side, i: side*i
+    if sideNumber == 1:
+      for i in range(repetitions):
+        tileIncriment = incriment(width, i)
+        tile = (pos[0] + xTrans + tileIncriment, pos[1] + yTrans,width, height)
+        tileList.append(tile)
+    else:
+      for i in range(repetitions):
+        tileIncriment = incriment(height, i)
+        tile = (pos[0] + xTrans, pos[1] + yTrans + tileIncriment, width, height)
+        tileList.append(tile)
+    return tileList
   
     """
     To get the individual images we would need to make an interval of 32 pixels and then send those blocks over to the block classes, because at this point they need their own classes to handle collision

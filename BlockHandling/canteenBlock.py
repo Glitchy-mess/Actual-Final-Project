@@ -6,6 +6,11 @@ class CBlock(BM):
 
     super().__init__(screen,image, imageRect, tileSize)
     self.blockType = blockType
+    
+  def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
+    tileList = super().tileDraw(repetitions, pos, width, height, sideNumber, xTrans, yTrans)
+    return tileList
+    
   def collisionBounds(self, pos):
 
     #acts as the 1x3 rectangle
@@ -14,37 +19,28 @@ class CBlock(BM):
     #nvm this did not help but at least it makes the red block convineant
     height = self.yTile * 3/2
     width = self.xTile 
-    topCollisionList = []
-    bottomCollisionList = []
-    incriment = lambda side, i: side * (i)
+
+
     #Two bounds
 
     
     if self.blockType == 4:
-      #topCollision = (pos[0] + self.xTile, pos[1], width, height)
-      for i in range(1,3):
-        tileIncriment = incriment(width, i)
-        topCollisionTile = (pos[0] + tileIncriment, pos[1], width, height)
-        topCollisionList.append(topCollisionTile)
+      topCollisionList = self.tileDraw(2, pos, width, height, 1, width, 0)
+      bottomCollisionList = self.tileDraw(3, pos, width, height, 1, 0, height)
       
-      #bottomCollision = (pos[0],pos[1] + height, width, height)
-      for i in range(3):
-        tileIncriment = incriment(width, i)
-        bottomCollisionTile = (pos[0] + tileIncriment, pos[1] + height, width, height)
-        bottomCollisionList.append(bottomCollisionTile)
+
     else:
-      #topCollision = (pos[0],pos[1], width1, height2)
-      for i in range(3):
-        tileIncriment = incriment(width, i)
-        topCollisionTile = (pos[0] + tileIncriment, pos[1], width, height)
-        topCollisionList.append(topCollisionTile)
+
+      topCollisionList = self.tileDraw(3, pos, width, height, 1, 0,0)
+      bottomCollisionList = self.tileDraw(2, pos, width, height, 1, 0, height)
         
       #bottomCollision = (pos[0], pos[1] + height2, width2, height2)
-      for i in range(2):
-        tileIncriment = incriment(width, i)
-        bottomCollisionTile = (pos[0] + tileIncriment, pos[1] + height, width, height)
-        bottomCollisionList.append(bottomCollisionTile)
     collisionList = (topCollisionList, bottomCollisionList)
+    RED = [255, 0, 0]
+
+    for collisionShapes in collisionList:
+      for rect in collisionShapes:
+        pygame.draw.rect(self.screen, RED, (rect[0], rect[1], rect[2], rect[3]), 1)
 
     return collisionList
 

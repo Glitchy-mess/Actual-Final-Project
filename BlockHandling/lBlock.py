@@ -6,7 +6,8 @@ import pygame
 class LBlock(BM):
   def __init__(self, screen, image, imageRect, tileSize):
     super().__init__(screen,image, imageRect, tileSize)
-  
+  def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
+      super().tileDraw(repetitions, pos, width, height, sideNumber, xTrans, yTrans)
   def collisionBounds(self, pos):
     width = self.xTile
     height = self.yTile
@@ -23,7 +24,6 @@ class LBlock(BM):
     what i can also do is make the settled blocks these rectangles but filled in, they'd be a monochrome color and would render in between the background fill statement and the grid being made
     """
     #vertical bound
-    verticalCollision = (pos[0],pos[1], self.xTile, height)
     tileIncriment = 0
     for i in range(3):
       tileIncriment = incriment(height, i)
@@ -32,7 +32,6 @@ class LBlock(BM):
     
     #horizontal bound
     for i in range(3):
-      
       tileIncriment = incriment(width, i)
       horizontalCollisionTile = (pos[0] + tileIncriment, pos[1] + (2*height), width, height)
       horizontalCollisionList.append(horizontalCollisionTile)
