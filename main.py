@@ -50,6 +50,8 @@ Use a list to store the vals of all the blocks after they settle, and then draw 
 gameState = False
 newTile = True
 BLACK = (0,0,0)
+#what if collision list actually held every single individual tile that has dropped so that i can actually impliment clearing lines?
+collisionList = []
 #pygame.Surface.blit(screen, file[0], (screenSize[0]/2,yVal))
 
 
@@ -117,6 +119,7 @@ while not gameState:
     if counter != 10:
       collisionBonds = GL.settleCollision(screen, image, imageRect, tileSize[2], (xVal, yVal), blockType)
     else:
+      
       newTile = True
   pygame.display.flip()
   

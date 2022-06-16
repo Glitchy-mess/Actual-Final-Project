@@ -66,12 +66,13 @@ class gameLogic():
       blockSettle = TB(screen, image, imageRect, tileSize)
     elif blockType == 4 or blockType == 5:
       blockSettle = CB(screen, image, imageRect, tileSize, blockType)
-    elif blockType == 5:
+    elif blockType == 6:
       blockSettle = UB(screen, image, imageRect, tileSize)
     else:
       blockSettle = LB(screen, image,imageRect, tileSize)
       
     
-    blockSettle.collisionBounds(pos)
+    collisionList = blockSettle.collisionBounds(pos)
+    
     
     

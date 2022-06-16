@@ -28,14 +28,7 @@ class blockMethods(ABC):
   @abstractmethod
   def settleLogic(self):
     pass
-    
-    
   
-
-
-  
-
-    
     """
     To get the individual images we would need to make an interval of 32 pixels and then send those blocks over to the block classes, because at this point they need their own classes to handle collision
     """ #https://pygame.readthedocs.io/en/latest/3_image/image.html
@@ -45,6 +38,6 @@ class blockMethods(ABC):
     find a way to log all of the black pixels and base the collision around that
     block width = could be 3 or 2, honestly you could just declare it as you call the block because it's well defined
     block length is the max of the bottom and top lengths
-    
+    solved this by just not giving a crap about the black pixels or whatever, and instead just slicing the image into a grid
     """
   
