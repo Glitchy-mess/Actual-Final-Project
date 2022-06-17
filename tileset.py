@@ -23,9 +23,14 @@ def randomizer(screen, scale):
     #make sure to use this command to get collision bounds
   fileRect = file.get_rect()
   #handles x scaling, dunno why 2 works but it does so let's go with that
-  fileRect[2] *= 2
+  #try making this dynamic so that you can support any resolution
+  print(scale)
+  fileRect[2] = scale[1] * 3
   #handles y scaling
-  fileRect[3] *= 2
+  if randNum == 3 or randNum == 4 or randNum == 5:
+    fileRect[3] = scale[1] * 2
+  else:
+    fileRect[3] = scale[1] * 3
   #nasocally scales the file up to the new length and width to fit the grid
   file = pygame.transform.scale(file,( fileRect[2],fileRect[3]))
   newFileRect = file.get_rect()

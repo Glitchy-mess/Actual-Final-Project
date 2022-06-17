@@ -4,8 +4,8 @@ to determine collision bounds, declare a bunch of rectangles to represent the bo
 from BlockHandling.generalBlock import blockMethods as BM
 import pygame
 class LBlock(BM):
-  def __init__(self, screen, image, imageRect, tileSize):
-    super().__init__(screen,image, imageRect, tileSize)
+  def __init__(self, screen, image, imageRect):
+    super().__init__(screen,image, imageRect)
   def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
       super().tileDraw(repetitions, pos, width, height, sideNumber, xTrans, yTrans)
   def collisionBounds(self, pos):
@@ -38,7 +38,9 @@ class LBlock(BM):
 
   #might not be necessary because of what i did in main to generalize everythnig
     collisionList = (verticalCollisionList, horizontalCollisionList)
+    RED = [255, 0,0]
+    for collisionShapes in collisionList:
+      for rect in collisionShapes:
+        pygame.draw.rect(self.screen, RED, (rect[0], rect[1], rect[2], rect[3]), 1)
     
     return collisionList
-  def settleLogic(self):
-    pass

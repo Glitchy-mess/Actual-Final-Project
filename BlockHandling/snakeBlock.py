@@ -2,9 +2,9 @@
 from BlockHandling.generalBlock import blockMethods as BM
 import pygame
 class SBlock(BM):
-  def __init__(self, screen, image, imageRect, tileSize, blockType):
+  def __init__(self, screen, image, imageRect, blockType):
 
-    super().__init__(screen,image, imageRect, tileSize)
+    super().__init__(screen,image, imageRect)
     self.blockType = blockType
 
 
@@ -66,7 +66,4 @@ class SBlock(BM):
   
     return collisionList
 
-  def settleLogic(self):
-
-    pass
   

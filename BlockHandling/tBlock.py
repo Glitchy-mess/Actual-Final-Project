@@ -2,9 +2,9 @@
 from BlockHandling.generalBlock import blockMethods as BM
 import pygame
 class TBlock(BM):
-  def __init__(self, screen, image, imageRect, tileSize):
+  def __init__(self, screen, image, imageRect):
 
-    super().__init__(screen,image, imageRect, tileSize)
+    super().__init__(screen,image, imageRect)
   
   def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
     tileList = super().tileDraw(repetitions, pos, width, height, sideNumber, xTrans, yTrans)
@@ -38,8 +38,3 @@ class TBlock(BM):
         pygame.draw.rect(self.screen, RED, (rect[0], rect[1], rect[2], rect[3]), 1)
   
     return collisionList
-
-  def settleLogic(self):
-
-    pass
-  

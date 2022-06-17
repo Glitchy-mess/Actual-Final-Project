@@ -35,6 +35,13 @@ def backgroundDraw(screenSize, screen):
   pygame.draw.rect(screen, LGRAY, (edgeXVal[1], 0, edgeIntervalScale, screenSize[1]))
   pygame.draw.rect(screen, LGRAY, (0, screenSize[1] - edgeIntervalScale, screenSize[0], edgeIntervalScale))
   #fix this to only be two values
-  return tileSize, tileSize, edgeIntervalScale
-    
-  
+  return tileSize, edgeIntervalScale
+
+#draws the instructions for the player 
+def textDraw(screen, edgeIntervalScale):
+  GRAY = [200,200,200]
+  #credits to https://www.geeksforgeeks.org/python-display-text-to-pygame-window/ for being better at documenting how font rendering works than the actual documentation
+  #sysfont grabs a font from the system, beats me why its not the same as the general font command
+  font = pygame.font.SysFont("arial", 14)
+  text = font.render("Press A or D to move left or right respectively; Arrow keys work as well for this", True, GRAY)
+  pygame.Surface.blit(screen, text, [edgeIntervalScale,40])
