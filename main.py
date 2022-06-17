@@ -64,22 +64,24 @@ while not gameState:
   screen.fill(BLACK)
   backgroundDraw(screenSize, screen)
   if newTile == True:
+    yVal = 0
+    xVal = screenSize[0]/2
+    #pos is initialized twice so that currentBlockCollision can actually run
+    pos = [xVal, yVal]
     file = randomizer(screen, tileSize)
     image = file[0]
     blockType = file[2] + 1
     imageRect = image.get_rect()
     sideBoundSize = [tileSize[2], screenSize[1] - tileSize[2]]
-    print(len(collisionList))
+    currentBlockCollision = GL.settleCollision(screen, image, imageRect, tileSize, pos, blockType)
 
-    yVal = 0
-    xVal = screenSize[0]/2
     counter = 0
   frameRate.tick(15)
   xChange = 0
   yChange = 0
   newTile = False
-  
-  pygame.Surface.blit(screen, image, (xVal,yVal))
+  pos = [xVal, yVal]
+  pygame.Surface.blit(screen, image, pos)
   
   for event in pygame.event.get():
     #investigate why xVal doesn't get changed at all
@@ -89,7 +91,7 @@ while not gameState:
      gameState = True
     elif event.type == pygame.KEYDOWN:
       
-      xMovement = GL.generalMovement(xVal, event.key, sideBoundSize, imageRect)
+      xMovement = GL.generalMovement(pos, event.key, sideBoundSize, imageRect, collisionList, currentBlockCollision)
       xVal = xMovement[0]
       xChange = xMovement[1]
       counter = 0
@@ -114,19 +116,18 @@ while not gameState:
     
     #generalBlockFunct.collision(blockNumber)
   
-  yMovement = GL.downMovement(yVal, sideBoundSize[1] ,imageRect)
+  yMovement = GL.downMovement(pos, sideBoundSize[1] ,imageRect)
   yVal = yMovement[0]
   yChange = yMovement[1]
   if yChange == 0 and xChange == 0:
     counter += 1
     if counter != 10:
-      collisionTile = (GL.settleCollision(screen, image, imageRect, tileSize[2], (xVal, yVal), blockType))
+      collisionTile = (GL.settleCollision(screen, image, imageRect, tileSize[2], pos, blockType))
 
-      collisionList.append(collisionTile)
-      
     else:
-      
+      collisionList.append(collisionTile)
       newTile = True
+  GL.lineClear(collisionList, screen)
   pygame.display.flip()
   
 pygame.quit()

@@ -6,7 +6,6 @@ import pygame
 from random import randrange
 def randomizer(screen, scale):
   randNum = randrange(7)
-  #randNum = 4
   if randNum == 0:
     file = pygame.image.load("/home/runner/Final-project/BlockHandling/new sprites/blueBlock.png")
   elif randNum == 1:
