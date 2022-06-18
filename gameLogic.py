@@ -9,6 +9,7 @@ from BlockHandling.canteenBlock import CBlock as CB
 from BlockHandling.snakeBlock import SBlock as SB
 from BlockHandling.tBlock import TBlock as TB
 from BlockHandling.uBlock import UBlock as UB
+#handles all of the game logic for the program like collision and movement
 class gameLogic():
   def __init__(self,tileSize):
     #initialize incriments and the speed values
@@ -48,7 +49,7 @@ class gameLogic():
     return collisionCheck, newTranslation
   """
     
-  #handles moveing down every tick
+  #handles moving down every tick
   def downMovement(self, pos, screenWidth, screenRect):
     pos[1] += self.ySpeed
     bottomYPos = pos[1] + screenRect[3]
@@ -58,13 +59,9 @@ class gameLogic():
           pos[1] = screenWidth - screenRect[3]
           yChange = 0
     return pos[1], yChange
+    
   #handles movement left and right whenever the user presses the respective buttons
   def generalMovement(self, pos, event, screenLength, rectWidth, tileCollision):
-    """
-    Priorities for collision
-    find the right and left bound of the image and then say that the right bound can't exceed the right border, left bound has already been defined and can work though.
-    use the get_rect() command to get a rectangle and then add its length for the right wall
-    """
     xChange = self.xSpeed
     #gets the bounds that would collide with the settled blocks, commented out as they are only used for the collision check with the settled blocks  
     """for collisions in currentBlockCollision:
@@ -91,11 +88,6 @@ class gameLogic():
         xChange = 0
 
     return pos[0], xChange
-    """
-    Try to make something like
-    if there's a rectangle in the screen that stretches throughout the thing
-    clear out the middle
-    translate everything in the dictionary for x positions to be one tile down"""
   #handles displaying the collision tiles for the blocks that have settled, its more useful for when block collision is added
   def settleCollision(self, screen, image, imageRect, pos, blockType):
     #run through every block type and initilaize the respective class
@@ -113,10 +105,15 @@ class gameLogic():
     #get the collision bounds
     collisionList = blockSettle.collisionBounds(pos)
     return collisionList
-  #draw the collision bounds of all the previous blocks that have dropped  
+  #draw the collision bounds of all the previous blocks that have dropped, should also clear out lines as they get filled but that hasn't been made yet
   def lineClear(self, collisionList, screen):
     GRAY = [189,189,189]
     for tiles in collisionList:
       for tileCoordinateList in tiles:
         for cords in tileCoordinateList:
           pygame.draw.rect(screen, GRAY, (cords[0], cords[1], cords[2],cords[3]))
+    """
+    when making the line clear function, try
+    if there's a rectangle in the screen that stretches throughout the thing
+    clear out the middle
+    translate everything in the dictionary for x positions to be one tile down"""

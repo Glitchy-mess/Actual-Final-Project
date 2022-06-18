@@ -1,44 +1,33 @@
-#handle the L block here
-"""
-to determine collision bounds, declare a bunch of rectangles to represent the bounds"""
+
 from BlockHandling.generalBlock import blockMethods as BM
 import pygame
+#handle the L block/yellow block here
+#refer to canteenBlock.py for definitions
 class LBlock(BM):
   def __init__(self, screen, image, imageRect):
     super().__init__(screen,image, imageRect)
+    
   def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
-      super().tileDraw(repetitions, pos, width, height, sideNumber, xTrans, yTrans)
+    tileList = super().tileDraw(repetitions, pos, width, height, sideNumber, xTrans, yTrans)
+    return tileList
+    
   def collisionBounds(self, pos):
+    #initialize everything    
     width = self.xTile
     height = self.yTile
     verticalCollisionList = []
     horizontalCollisionList = []
-    incriment = lambda side, i: side * i
-    """
-    Define the new collision bounds for this guy instead of just a giant rectangle, you could try making two smaller rectangles that call on general movement
-    """
-    #the tile used in this case shouldn't matter cause its a 3x3 as a L
-    #in other shapes like the canteen block this becomes self.xTile * 2 because its two tiles not 3(at least for height)
-    """
-    For now i plan on making the bounds a red rectangle that just prove that they exist, but ideally i don't draw them at all but rather store them as just rectangles, probably with coordinates tbh.
-    what i can also do is make the settled blocks these rectangles but filled in, they'd be a monochrome color and would render in between the background fill statement and the grid being made
-    """
-    #vertical bound
-    tileIncriment = 0
-    for i in range(3):
-      tileIncriment = incriment(height, i)
-      verticalCollisionTile = (pos[0], pos[1] + tileIncriment, width, height)
-      verticalCollisionList.append(verticalCollisionTile)
-    
-    #horizontal bound
-    for i in range(3):
-      tileIncriment = incriment(width, i)
-      horizontalCollisionTile = (pos[0] + tileIncriment, pos[1] + (2*height), width, height)
-      horizontalCollisionList.append(horizontalCollisionTile)
-
-  #might not be necessary because of what i did in main to generalize everythnig
-    collisionList = (verticalCollisionList, horizontalCollisionList)
     RED = [255, 0,0]
+    collisionList = (None, None)
+    #vertical bound of 1x3 tiles
+    verticalCollisionList = self.tileDraw(3, pos, width, height, 2 ,0,0)
+    
+    #horizontal bound of 3x1 tiles
+    horizontalCollisionList = self.tileDraw(3,pos,width,height,1,0, 2*height)
+    
+    collisionList = (verticalCollisionList, horizontalCollisionList)
+    
+    
     for collisionShapes in collisionList:
       for rect in collisionShapes:
         pygame.draw.rect(self.screen, RED, (rect[0], rect[1], rect[2], rect[3]), 1)

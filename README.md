@@ -9,3 +9,5 @@ DONE-  Making a functioning block generator from a list of 7 blocks, and draw it
 NOT DONE - Clearing lines after they have been filled horizontally
 
 NOT DONE - Ending the program after the user has reached the top
+
+All of the functionallity hasn't been added as of submitting this

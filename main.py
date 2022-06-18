@@ -26,41 +26,32 @@ from gameLogic import gameLogic
 
 #initialize the program
 pygame.init()
+
+#changing the screen size does break the scaling of the blocks, so its not quite dynamic yet
 screenSize = (600,600)
 screen = pygame.display.set_mode(screenSize)
 
 #draw the background and return the s
 tileSize = backgroundDraw(screenSize, screen)
-#generalBlockFunct = generalBlock.blockMethods(screen, 0)
 
-#generalBlockFunct.blockDraw()
 pygame.display.flip()
 
 GL = gameLogic(tileSize)
-#yVal can't be resetted every frame as that would send the picture back to the top
 
-#can't really turn this into a class because i have to do stuff every frame and handling it from main makes life v e r y easy
-"""
-Use a list to store the vals of all the blocks after they settle, and then draw them in and activate the collisions
-"""
+
 gameState = False
 newTile = True
 BLACK = (0,0,0)
-#what if collision list actually held every single individual tile that has dropped so that i can actually impliment clearing lines?
 collisionList = []
-#pygame.Surface.blit(screen, file[0], (screenSize[0]/2,yVal))
-
-
-
+#initializes the framerate class from pygame, which gets called in the loop
 frameRate = pygame.time.Clock()
 
+#runs the program forever until the user exits, will add another exit via the game's actual purpose
 while not gameState:
   #resets the screen after the image moves, credits to the second answer in https://stackoverflow.com/questions/21516543/how-to-remove-draw-objects-from-pygame-window for giving that idea
   screen.fill(BLACK)
   backgroundDraw(screenSize, screen)
-  #checks to see if a new tile needs to be made
-  #screen.draw.text("Press A or D to move, arrow keys also work", (10,20), color = "black")
-
+  #checks to see if a new tile needs to be made, if so then initialize a bunch of variables and functions
   if newTile == True:
     yVal = 0
     xVal = screenSize[0]/2
@@ -71,27 +62,31 @@ while not gameState:
     blockType = file[2] + 1
     imageRect = image.get_rect()
     sideBoundSize = [tileSize[1], screenSize[1] - tileSize[1]]
+    #initializes the current block's collision so that it can be compared with the ones that have settled already
     currentBlockCollision = GL.settleCollision(screen, image, imageRect, pos, blockType)
     counter = 0
-
+  #runs the program at 15 fps which was a pretty good speed for gameplay
   frameRate.tick(15)
+  #draws the text on the screen
   textDraw(screen, tileSize[1])
+  #initialize relevant values and draw the block on the screen
   xChange = 0
   yChange = 0
   newTile = False
   pos = [xVal, yVal]
   pygame.Surface.blit(screen, image, pos)
-  
+  #checks for events before doing any translations or drawings
   for event in pygame.event.get():
-    #investigate why xVal doesn't get changed at all
+    
     #checks to see if the usesr is still holding down a key every 100 milliseconds
     intervalSet = pygame.key.set_repeat(100)
-    #better leave this as the first thing in case the user quits
+    
+    # leave this as the first thing in case the user quits
     if event.type == pygame.QUIT:
      gameState = True
     #checks to see if a key is held down
     elif event.type == pygame.KEYDOWN:
-      
+      #handles the change in x values
       xMovement = GL.generalMovement(pos, event.key, sideBoundSize, imageRect, collisionList)
       xVal = xMovement[0]
       xChange = xMovement[1]
@@ -99,18 +94,25 @@ while not gameState:
 
     
     
-  
+  #handles the change in y values
   yMovement = GL.downMovement(pos, sideBoundSize[1] ,imageRect)
   yVal = yMovement[0]
   yChange = yMovement[1]
+  #checks to see if the player has stopped moving
   if yChange == 0 and xChange == 0:
     counter += 1
-    if counter != 10:
-      collisionTile = (GL.settleCollision(screen, image, imageRect, pos, blockType))
-
-    else:
+    
+    #draws a red box around the tiles that act as the block's collision
+    collisionTile = (GL.settleCollision(screen, image, imageRect, pos, blockType))
+    
+    
+    #checks to see if the player has stopped moving for 10 ticks, if they haven't then continue on w/the program
+    if counter == 10:  
+      #adds the collision bounds of the block that has been placed and gets a new block
       collisionList.append(collisionTile)
       newTile = True
+      
+  #draws the block collisions, doesn't require also looking at collision cause the movement covers that
   GL.lineClear(collisionList, screen)
   pygame.display.flip()
   

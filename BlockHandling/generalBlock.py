@@ -1,6 +1,7 @@
 #make the general block logic here
-import pygame
+
 from abc import ABC, abstractmethod
+#abstract class that every block class inherits from for functions
 class blockMethods(ABC):
   @abstractmethod
   def __init__(self,screen, image, imageRect):
@@ -9,29 +10,21 @@ class blockMethods(ABC):
     #loads and stores the image as a variable
     self.image = image
     self.imageRect = imageRect
+    #acts as a generalization of the image as most of the images are 3x3
     self.xTile = self.imageRect[2]/3
     self.yTile = self.imageRect[3]/3
-    #self.imageBound = pygame.get_rect(self.image)
         
-    
+  #makes an abstract method to ensure that classes actually make a collision bound method
   @abstractmethod
   def collisionBounds(self):
     pass
-    #gonna be looking at 2-3 rectangles for the collision, they are going to be 10x10 pixels
-    """
-    What if i were to make 2-3 rectangles for collision and then input their height and width which then get combined to make the things 
-    rectangleParams1, rectangleParams2, rectangleParams3 = None)
-    nah it wont' work for generalizing everything
-    """
 
-  @abstractmethod
-  def settleLogic(self):
-    pass
-  #makes a list of tiles that act as the collision bounds for the blocks
+  #acts as the abstract method for drawing tiles, and returns a list of all of the tiles that are in the block for collision purposes
   @abstractmethod
   def tileDraw(self, repetitions, pos, width, height, sideNumber, xTrans, yTrans):
     tileList = []
     incriment = lambda side, i: side*i
+    
     #acts as the width incriments
     if sideNumber == 1:
       for i in range(repetitions):
@@ -45,4 +38,4 @@ class blockMethods(ABC):
         tile = (pos[0] + xTrans, pos[1] + yTrans + tileIncriment, width, height)
         tileList.append(tile)
     return tileList
-#https://pygame.readthedocs.io/en/latest/3_image/image.html
+#credits to https://pygame.readthedocs.io/en/latest/3_image/image.html for some of the ideas 

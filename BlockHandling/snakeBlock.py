@@ -1,6 +1,8 @@
-#handle both snake blcoks here
+
 from BlockHandling.generalBlock import blockMethods as BM
 import pygame
+#handles the snake blocks/lime and blue block
+#refer to canteenBlock.py for definitions
 class SBlock(BM):
   def __init__(self, screen, image, imageRect, blockType):
 
@@ -13,52 +15,35 @@ class SBlock(BM):
     return tileList
 
   def collisionBounds(self, pos):
-
+    #initialize everything
     topCollisionList = []
     middleCollisionList = []
     bottomCollisionList = []
-    """
-    TODO TOMORROW
-    FIX UP THIS AND UBLOCK SO THAT IT MATCHES THE OTHER BLOCKS
-    DUMP ALL OF THE TILES INTO MAIN
-    USE TILES TO CHECK FOR COLLISION
-    HOPEFULLY YOU CAN ALSO DO A BIT OF TROLLING BY CLEARING LINES, DRAW THE STORED TILES AT LEAST THO
-    """
-
-    #divide this into 3 blocks
-    height = self.yTile
-    #top line
-    #middle line
-    #bottom line
     width = self.xTile
     height = self.yTile
-    if self.blockType == 1:
-      #make sure to actually translate everything properly when copying down values cause otherwise it gets odd
-      topCollisionList = self.tileDraw(2, pos, width, height, 1, width, 0)
-      bottomCollisionList = self.tileDraw(2, pos, width, height, 1, 0, height*2)
-      """for i in range(1,3):
-        tileIncriment = incriment(width, i)
-        topCollisionTile = (pos[0] + tileIncriment, pos[1], width, height)
-        topCollisionList.append(topCollisionTile)"""
+    RED = [255, 0, 0]
+    collisionList = (None, None, None)
 
-      """for i in range(2):
-        tileIncriment = incriment(width, i)
-        bottomCollisionTile = (pos[0] + tileIncriment, pos[1], width, height)
-        bottomCollisionList.append(bottomCollisionTile)"""
+    #make top and bottom bounds of 2x1 tiles, they'll just be translated differently
+    if self.blockType == 1:
+      #make sure to actually translate everything properly when copying down values cause otherwise it gets odd 
+      topCollisionList = self.tileDraw(2, pos, width, height, 1, width, 0)
+
+
+      bottomCollisionList = self.tileDraw(2, pos, width, height, 1, 0, height*2)
+
     
-    else:
-      #top bound      
+    else:   
       topCollisionList = self.tileDraw(2, pos, width, height, 1, 0, 0)
-      #bottom bound
+
       bottomCollisionList = self.tileDraw(2, pos, width, height, 1, width, height*2)
     
-      
 
+    #middle bound of 1 tile
     middleCollisionList = self.tileDraw(1, pos, width, height, 1, width, height)
-    #middleCollision = (pos[0] + self.xTile, pos[1] + height, width2, height)
+
   
     collisionList = (topCollisionList, middleCollisionList, bottomCollisionList)
-    RED = [255, 0, 0]
 
     for collisionShapes in collisionList:
       for rect in collisionShapes:
